@@ -1,12 +1,12 @@
 # Minesweeper
-A C++ minesweeper game .. it's functional with no errors up till now.
+A C++ minesweeper game. it's functional with no errors up till now.
 it has 3 levels (easy - intermediate - hard).
 mines are generated randomly and first click is guaranteed not to be a mine.
 flags and question marks are allowed.
 a track of time, clicks and mines left are available.
 the player loses when he open a mine.
 the player wins when the number of unopened cells is equal the number of mines and he didn't lose before.
-when an empty cell is opened .. all the empty adjacent cells are opened too.
+when an empty cell is opened. all the empty adjacent cells are opened too.
 the score is calculated as follow: (rows^4 * columns^4)  /(seconds * clicks).
 the number of mines is calculated as follows: 1 + (rows * columns) / 10.
 
