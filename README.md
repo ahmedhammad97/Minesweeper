@@ -11,5 +11,4 @@ When an empty cell is opened. all the empty adjacent cells are opened too.
 The score is calculated as follow: (rows^4 * columns^4)  /(seconds * clicks).
 The number of mines is calculated as follows: 1 + (rows * columns) / 10.
 
-An option to save a game and load it in a later time is added to the menu but not coded yet.
-Also a file that saved the scores of players is created and scores are stored in, but can't retrieve it back or display it yet.
+A file that saved the scores of players is created and scores are stored in, and an option to display them is available.
