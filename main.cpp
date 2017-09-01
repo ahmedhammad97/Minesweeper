@@ -3,6 +3,7 @@
 #include <conio.h>
 #include <fstream>
 #include <time.h>
+#include <queue>
 
 
 using namespace std;
@@ -21,7 +22,7 @@ void preGame(int choice);
 int startMenu(){
     int choice;
     cout<<"\t\t\t*****  Minesweeper Game  *****\n\n";
-    cout<<"\t\t\t 1- New game\n\t\t\t 2- Load game\n\t\t\t 3- Scores\n";
+    cout<<"\t\t\t 1- New game\n\t\t\t 2- Scores\n";
 
     cin>>choice;
     system("cls");
@@ -70,10 +71,13 @@ void preGame(int choice){
 
     }
     else if(choice == 2){
-
-    }
-    else if(choice == 3){
-
+        ifstream r;
+        r.open("scores.txt");
+        cout<<r.rdbuf();
+        r.close();
+        getch();
+        system("cls");
+        startMenu();
     }
     else{
         cout<<"No such a choice .. please try again";
@@ -158,16 +162,36 @@ void processActions(int action){
         if(action==1){
             view[row][col]=table[row][col];
             if(table[row][col]=='*'){lost=true;}
-            else if(table[row][col]==' '){
 
-                if((row-1)>=0 && (row-1)<s && (col-1)>=0 && (col-1)<s && table[row-1][col-1]==' '){view[row-1][col-1]=' ';}
-                if((row-1)>=0 && (row-1)<s && (col)>=0 && (col)<s && table[row-1][col]==' '){view[row-1][col]=' ';}
-                if((row-1)>=0 && (row-1)<s && (col+1)>=0 && (col+1)<s && table[row-1][col+1]==' '){view[row-1][col+1]=' ';}
-                if((row)>=0 && (row)<s && (col-1)>=0 && (col-1)<s && table[row][col-1]==' '){view[row][col-1]=' ';}
-                if((row)>=0 && (row)<s && (col+1)>=0 && (col+1)<s && table[row][col+1]==' '){view[row][col+1]=' ';}
-                if((row+1)>=0 && (row+1)<s && (col-1)>=0 && (col-1)<s && table[row+1][col-1]==' '){view[row+1][col-1]=' ';}
-                if((row+1)>=0 && (row+1)<s && (col)>=0 && (col)<s && table[row+1][col]==' '){view[row+1][col]=' ';}
-                if((row+1)>=0 && (row+1)<s && (col+1)>=0 && (col+1)<s && table[row+1][col+1]==' '){view[row+1][col+1]=' ';}
+
+            else if(table[row][col]==' '){
+                    queue<int> q;
+                    q.push(row);
+                    q.push(col);
+
+                    while(!q.empty()){
+                        int tempRow = q.front();
+                        q.pop();
+                        int tempCol = q.front();
+                        q.pop();
+
+
+                        cout<<"Check!";
+
+                        if((tempRow-1)>=0 && (tempRow-1)<s && (tempCol-1)>=0 && (tempCol-1)<s && table[tempRow-1][tempCol-1]==' '){q.push(tempRow-1);q.push(tempCol-1);}
+                        if((tempRow-1)>=0 && (tempRow-1)<s && (tempCol)>=0 && (tempCol)<s && table[tempRow-1][tempCol]==' '){q.push(tempRow-1);q.push(tempCol);}
+                        if((tempRow-1)>=0 && (tempRow-1)<s && (tempCol+1)>=0 && (tempCol+1)<s && table[tempRow-1][tempCol+1]==' '){q.push(tempRow-1);q.push(tempCol+1);}
+                        if((tempRow)>=0 && (tempRow)<s && (tempCol-1)>=0 && (tempCol-1)<s && table[tempRow][tempCol-1]==' '){q.push(tempRow);q.push(tempCol-1);}
+                        if((tempRow)>=0 && (tempRow)<s && (tempCol+1)>=0 && (tempCol+1)<s && table[tempRow][tempCol+1]==' '){q.push(tempRow);q.push(tempCol+1);}
+                        if((tempRow+1)>=0 && (tempRow+1)<s && (tempCol-1)>=0 && (tempCol-1)<s && table[tempRow+1][tempCol-1]==' '){q.push(tempRow+1);q.push(tempCol-1);}
+                        if((tempRow+1)>=0 && (tempRow+1)<s && (tempCol)>=0 && (tempCol)<s && table[tempRow+1][tempCol]==' '){q.push(tempRow+1);q.push(tempCol);}
+                        if((tempRow+1)>=0 && (tempRow+1)<s && (tempCol+1)>=0 && (tempCol+1)<s && table[tempRow+1][tempCol+1]==' '){q.push(tempRow+1);q.push(tempCol+1);}
+
+                        view[tempRow][tempCol]=' ';
+                        table[tempRow][tempCol]='O';
+
+
+                    }
 
             }
         }
@@ -199,9 +223,6 @@ void processActions(int action){
 
     }
     else if(action==5){
-
-    }
-    else if(action==6){
         exit(0);
     }
     else{
@@ -233,10 +254,13 @@ void interface(int clicks,int minesLeft, int timee){
     cin>>name;
     score= (s*s*s*s*s*s*s*s)/(seconds*clicks);
     cout<<"Your score: "<<score;
-
-    ofstream F("scores.txt");
-
-    F<<name<<" "<<score<<"\n";
+    cout<<"\n\n"<<name<<"\t"<<score<<"\n\n";
+    ofstream f;
+    f.open("scores.txt",std::ios_base::app);
+    f<<"\n"<<name<<"\t"<<score;
+    f.close();
+    getch();
+    exit(0);
 
 
     }
@@ -245,7 +269,7 @@ void interface(int clicks,int minesLeft, int timee){
     cout<<"Clicks: "<<clicks<<"  - Mines left: "<<minesLeft<<"  - Seconds: "<<seconds;
     cout<<"\n\n";
 
-    cout<<"What to do..?\n1-Open Cell\t2-Flag\t\t3-Question\t4-Unmark\n5-Save\t\t6-Exit\n";
+    cout<<"What to do..?\n1-Open Cell\t2-Flag\t\t3-Question\t4-Unmark\n5-Exit\n";
 
     int action;
     cin>>action;

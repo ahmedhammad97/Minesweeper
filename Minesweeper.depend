@@ -1,8 +1,9 @@
 # depslib dependency file v1.0
-1502624796 source:c:\users\ahmed vago\desktop\collage\minesweeper\minesweeper\main.cpp
+1504228258 source:c:\users\ahmed vago\desktop\collage\minesweeper\minesweeper\main.cpp
 	<iostream>
 	<stdlib.h>
 	<conio.h>
 	<fstream>
 	<time.h>
+	<queue>
 
