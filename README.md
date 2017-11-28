@@ -12,3 +12,7 @@ The score is calculated as follow: (rows^4 * columns^4)  /(seconds * clicks).
 The number of mines is calculated as follows: 1 + (rows * columns) / 10.
 
 A file that saved the scores of players is created and scores are stored in, and an option to display them is available.
+
+![Screenshot](https://github.com/ahmedhammad97/ClickTheSmallest/blob/master/MS1.JPG)
+
+![Screenshot](https://github.com/ahmedhammad97/ClickTheSmallest/blob/master/MS2.JPG)
